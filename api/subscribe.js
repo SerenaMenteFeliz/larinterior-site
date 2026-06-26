@@ -10,6 +10,16 @@
 //   BREVO_API_KEY               — (opcional) Brevo → SMTP & API → API Keys (v3)
 //   BREVO_LIST_ID               — (opcional) Brevo → Contatos → Listas → id numérico
 
+// Normaliza para E.164. Se já vier com +DDI, respeita. Sem DDI, assume +55 (Brasil).
+function normalizePhone(raw) {
+  if (!raw) return null;
+  const digits = raw.replace(/\D/g, '');
+  if (!digits) return null;
+  if (raw.trim().startsWith('+')) return '+' + digits;
+  // Brasil: 10 dígitos (fixo) ou 11 (celular) sem o 0 inicial
+  return '+55' + digits;
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
@@ -28,7 +38,7 @@ export default async function handler(req, res) {
   const contact = {
     email:    email.trim().toLowerCase(),
     nome:     (nome || '').trim() || null,
-    whatsapp: (whatsapp || '').trim() || null,
+    whatsapp: normalizePhone(whatsapp),
   };
 
   const event = {
