@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Desafio de 7 Dias — Meditação pra iniciantes | por Liz Zuppa</title>
+<meta name="description" content="7 ensinamentos + 7 práticas guiadas gravadas na natureza, com Liz Zuppa. Para quem sempre quis meditar — e nunca soube por onde começar." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,500&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'Inter Tight', -apple-system, system-ui, sans-serif;
+
+    --bg: #FBF6EC;
+    --bg-warm: #F4EAD8;
+    --ink: #2A1F2C;
+    --ink-soft: #5A4E58;
+    --ink-muted: #8A8090;
+    --accent: #B89968;
+    --accent-deep: #8E6F40;
+    --sage: #7D9E7A;
+    --line: #E8DDC8;
+    --err: #C66B5C;
+  }
+
+  /*  ============================================================
+      EDITAR: trocar este número quando houver lista real de espera.
+      0 = esconde a prova social.
+      ============================================================ */
+  :root { --waiting-count: 0; }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: linear-gradient(180deg, #FBF6EC 0%, #F4EAD8 50%, #FBF6EC 100%);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* ============ HEADER ============ */
+  .top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 22px 0;
+    max-width: 720px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 3;
+  }
+  .monogram {
+    font: 500 12px/1 var(--sans);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 12px;
+    background: rgba(255,255,255,0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.6);
+    border-radius: 999px;
+    font: 500 10.5px/1 var(--sans);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .status-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 6px var(--accent);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 0.6; transform: scale(0.9); }
+    50% { opacity: 1; transform: scale(1.1); }
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    position: relative;
+    padding: 24px 22px 48px;
+    overflow: hidden;
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .hero-photo {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .grain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.25;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.4  0 0 0 0 0.3  0 0 0 0 0.2  0 0 0 0.25 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  .dots {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .dot {
+    position: absolute;
+    border-radius: 50%;
+    background: var(--accent);
+    transition: transform 0.4s ease-out;
+    animation: twinkle 4s ease-in-out infinite;
+    opacity: 0.5;
+  }
+  @keyframes twinkle {
+    0%,100% { opacity: 0.2; }
+    50%     { opacity: 0.7; }
+  }
+
+  /* ============ ORB ============ */
+  .orb-stage {
+    position: relative;
+    width: 260px;
+    height: 260px;
+    margin: 16px auto 40px;
+    z-index: 3;
+  }
+  .orb-ring {
+    position: absolute;
+    left: 50%; top: 50%;
+    border-radius: 50%;
+    border: 1px solid rgba(184,153,104,0.4);
+    transform-origin: center;
+    animation: ring 8s ease-in-out infinite;
+  }
+  .orb-ring.r1 { width: 175px; height: 175px; margin: -87.5px 0 0 -87.5px; }
+  .orb-ring.r2 { width: 215px; height: 215px; margin: -107.5px 0 0 -107.5px; border-color: rgba(184,153,104,0.25); animation-delay: -1s; }
+  .orb-ring.r3 { width: 255px; height: 255px; margin: -127.5px 0 0 -127.5px; border-color: rgba(184,153,104,0.12); animation-delay: -2s; }
+  @keyframes ring {
+    0%,100% { transform: scale(0.7); opacity: 0.5; }
+    50%     { transform: scale(1.05); opacity: 0.9; }
+  }
+  .orb-wrap {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .orb {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #F4E1B8 0%, #D4A968 55%, #B89968 100%);
+    box-shadow:
+      0 0 50px rgba(212,169,104,0.5),
+      0 0 100px rgba(184,153,104,0.3);
+    animation: breathe 8s ease-in-out infinite;
+    position: relative;
+  }
+  @keyframes breathe {
+    0%,100% { transform: scale(0.78); box-shadow: 0 0 30px rgba(212,169,104,0.35), 0 0 60px rgba(184,153,104,0.2); }
+    50%     { transform: scale(1.0); box-shadow: 0 0 60px rgba(212,169,104,0.6), 0 0 120px rgba(184,153,104,0.4); }
+  }
+  .phase {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font: 500 9.5px/1 var(--sans);
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: rgba(70,50,20,0.7);
+  }
+  .phase.fade {
+    animation: phaseFade 0.6s ease both;
+  }
+  @keyframes phaseFade {
+    from { opacity: 0; transform: scale(0.92); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  /* ============ HEADLINE ============ */
+  .headline-block {
+    position: relative;
+    z-index: 3;
+    margin-top: 0;
+  }
+  .headline {
+    font-family: var(--serif);
+    font-size: clamp(2.4rem, 9vw, 3.6rem);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--ink);
+    margin-bottom: 20px;
+    text-wrap: balance;
+  }
+  .headline .accent {
+    color: var(--accent-deep);
+  }
+  .subhead {
+    font: 400 16px/1.55 var(--sans);
+    color: var(--ink-soft);
+    max-width: 320px;
+    margin: 0 auto;
+    text-wrap: pretty;
+  }
+
+  /* ============ PROMISES ============ */
+  .section {
+    padding: 72px 22px 0;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .eyebrow {
+    font: 500 10.5px/1 var(--sans);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--accent-deep);
+    margin-bottom: 32px;
+    text-align: center;
+  }
+  .promises-list { display: flex; flex-direction: column; }
+  .promise {
+    padding: 32px 0;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .promise:last-child { border-bottom: 1px solid var(--line); }
+  .promise-ghost {
+    position: absolute;
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 140px;
+    line-height: 1;
+    color: var(--accent);
+    opacity: 0.06;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+  }
+  .promise-num {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 26px;
+    font-weight: 300;
+    color: var(--accent-deep);
+    line-height: 1;
+    position: relative;
+    z-index: 1;
+  }
+  .promise-text {
+    font: 400 16px/1.5 var(--sans);
+    color: var(--ink);
+    text-wrap: pretty;
+    max-width: 360px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ============ TEMAS ============ */
+  .section-title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(1.7rem, 5vw, 2.2rem);
+    line-height: 1.1;
+    color: var(--ink);
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .temas-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding: 8px 0;
+  }
+  .tema {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 0 0 60px;
+    width: 100%;
+    gap: 4px;
+    z-index: 1;
+  }
+  .tema:last-child { padding-bottom: 0; }
+  /* linha vive só no gap entre dias — nunca atravessa texto */
+  .tema::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    height: 60px;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, rgba(184,153,104,0.5) 50%, rgba(184,153,104,0.45));
+  }
+  .tema:last-child::before { display: none; }
+  .tema-node {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #F4E1B8 0%, #D4A968 55%, #B89968 100%);
+    box-shadow: 0 0 10px rgba(212,169,104,0.6), 0 0 22px rgba(184,153,104,0.35);
+    animation: orbPulse 8s ease-in-out infinite;
+    margin-bottom: 14px;
+    flex-shrink: 0;
+  }
+  .tema:nth-child(2) .tema-node { animation-delay: -1.1s; }
+  .tema:nth-child(3) .tema-node { animation-delay: -2.3s; }
+  .tema:nth-child(4) .tema-node { animation-delay: -3.4s; }
+  .tema:nth-child(5) .tema-node { animation-delay: -4.6s; }
+  .tema:nth-child(6) .tema-node { animation-delay: -5.7s; }
+  .tema:nth-child(7) .tema-node { animation-delay: -6.8s; }
+  /* stagger reveal */
+  .tema.reveal:nth-child(1) { transition-delay: 0s; }
+  .tema.reveal:nth-child(2) { transition-delay: 0.08s; }
+  .tema.reveal:nth-child(3) { transition-delay: 0.16s; }
+  .tema.reveal:nth-child(4) { transition-delay: 0.24s; }
+  .tema.reveal:nth-child(5) { transition-delay: 0.32s; }
+  .tema.reveal:nth-child(6) { transition-delay: 0.4s; }
+  .tema.reveal:nth-child(7) { transition-delay: 0.48s; }
+  .tema-num {
+    font: 500 9.5px/1 var(--sans);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    opacity: 0.85;
+  }
+  .tema-title {
+    font: 500 17px/1.3 var(--sans);
+    color: var(--ink);
+    margin-top: 2px;
+  }
+  .tema-sub {
+    font: 400 13px/1.5 var(--sans);
+    color: var(--ink-muted);
+    margin-top: 4px;
+    max-width: 280px;
+  }
+
+  /* ============ BONUS ============ */
+  .bonus-list { display: flex; flex-direction: column; gap: 18px; margin-top: 4px; }
+  .bonus-item {
+    position: relative;
+    padding: 20px 20px 24px;
+    background: #FAF3E5;
+    border-radius: 3px;
+    box-shadow:
+      0 1px 2px rgba(70,50,20,0.08),
+      0 8px 24px rgba(70,50,20,0.1);
+    transform: rotate(var(--tilt, -0.6deg));
+    overflow: hidden;
+    transition: transform 0.4s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  .bonus-item:nth-child(2) { --tilt: 0.7deg; }
+  .bonus-item:nth-child(3) { --tilt: -0.8deg; }
+  .bonus-item:hover,
+  .bonus-item:active { transform: rotate(0deg) translateY(-2px); }
+  .bonus-grain {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.35;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5  0 0 0 0 0.4  0 0 0 0 0.3  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  @keyframes orbPulse {
+    0%, 100% { transform: scale(0.85); opacity: 0.6; }
+    50%       { transform: scale(1.1);  opacity: 1; }
+  }
+  .bonus-name {
+    font: 500 14px/1.3 var(--sans);
+    color: var(--ink);
+  }
+  .bonus-desc {
+    font: 400 13px/1.45 var(--sans);
+    color: var(--ink-soft);
+    margin-top: 4px;
+  }
+  .bonus-format {
+    display: inline-block;
+    margin-top: 10px;
+    font-family: 'Courier New', ui-monospace, monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    color: rgba(70,50,20,0.5);
+    text-transform: uppercase;
+  }
+
+  /* ============ FILMSTRIP ============ */
+  .filmstrip-section {
+    padding: 72px 0 0;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .filmstrip-head {
+    padding: 0 22px;
+    margin-bottom: 32px;
+    text-align: center;
+  }
+  .filmstrip-eyebrow {
+    font: 500 10.5px/1 var(--sans);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--accent-deep);
+    margin-bottom: 12px;
+  }
+  .filmstrip-title {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(1.7rem, 5vw, 2.2rem);
+    line-height: 1.1;
+    color: var(--ink);
+  }
+  .filmstrip-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 24px 22px 52px;
+    scroll-snap-type: x mandatory;
+    touch-action: pan-x;
+  }
+  .filmstrip-scroll::-webkit-scrollbar { display: none; }
+  .filmstrip {
+    display: flex;
+    gap: 18px;
+    width: max-content;
+  }
+  .polaroid {
+    position: relative;
+    flex: 0 0 auto;
+    width: 200px;
+    background: #FAF3E5;
+    padding: 12px 12px 28px;
+    border-radius: 3px;
+    box-shadow:
+      0 1px 2px rgba(70,50,20,0.08),
+      0 10px 28px rgba(70,50,20,0.12);
+    scroll-snap-align: center;
+    transform: rotate(var(--tilt, -1deg));
+    transition: transform 0.4s ease;
+  }
+
+  .feature-photo {
+    padding: 40px 22px 40px;
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+  }
+  .polaroid.featured {
+    width: 240px;
+    transform: rotate(-1.5deg);
+  }
+  .polaroid.featured .polaroid-img {
+    aspect-ratio: 4/5;
+  }
+  .polaroid:nth-child(2) { --tilt: 1.5deg; }
+  .polaroid:nth-child(3) { --tilt: -1.2deg; }
+  .polaroid:nth-child(4) { --tilt: 1deg; }
+  .polaroid:nth-child(5) { --tilt: -1.8deg; }
+  .polaroid-img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    border-radius: 1px;
+    position: relative;
+    overflow: hidden;
+    filter: sepia(0.2) saturate(0.85);
+  }
+  .polaroid-img.scene-mar    { background: linear-gradient(180deg, #E8D9B8 0%, #C7B594 45%, #8AA3A8 100%); }
+  .polaroid-img.scene-mata   { background: linear-gradient(180deg, #C8D6B9 0%, #8FA787 60%, #5E7A5B 100%); }
+  .polaroid-img.scene-vela   { background: radial-gradient(ellipse at 50% 60%, #F4D89A 0%, #C4925A 45%, #4A2E1A 100%); }
+  .polaroid-img.scene-maos   { background: linear-gradient(180deg, #F4E1B8 0%, #D4A968 50%, #8E6F40 100%); }
+  .polaroid-img.scene-amanhecer { background: linear-gradient(180deg, #F4C9A0 0%, #D49568 35%, #8E5A40 70%, #2A1F2C 100%); }
+
+  .polaroid-grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.4;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.5  0 0 0 0 0.4  0 0 0 0 0.3  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  .filmstrip-hint {
+    text-align: center;
+    font: 400 11px/1 var(--sans);
+    color: var(--ink-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 12px;
+  }
+  .filmstrip-hint::before { content: '← '; opacity: 0.5; }
+  .filmstrip-hint::after  { content: ' →'; opacity: 0.5; }
+
+  /* ============ FORM ============ */
+  .form-card {
+    margin-top: 0;
+    padding: 32px 24px;
+    background: rgba(255,255,255,0.55);
+    border: 1px solid rgba(255,255,255,0.7);
+    border-radius: 22px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .form-heading {
+    font-family: var(--serif);
+    font-size: 30px;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 20px;
+  }
+  .social-proof {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px 6px 10px;
+    background: rgba(184,153,104,0.12);
+    border-radius: 999px;
+    font: 500 11px/1 var(--sans);
+    color: var(--ink-soft);
+    margin-bottom: 24px;
+  }
+  .social-proof strong { color: var(--accent-deep); font-weight: 600; }
+  .social-proof[data-count="0"] { display: none; }
+
+  .form { display: flex; flex-direction: column; gap: 10px; }
+  .field { position: relative; padding-bottom: 14px; }
+  .field label {
+    display: block;
+    font: 500 10.5px/1 var(--sans);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 6px;
+  }
+  .field input {
+    appearance: none;
+    border: none;
+    background: transparent;
+    padding: 8px 0 14px;
+    font: 400 16px/1.2 var(--sans);
+    color: var(--ink);
+    width: 100%;
+    outline: none;
+    border-radius: 0;
+  }
+  .field input::placeholder { color: var(--ink-muted); opacity: 0.6; }
+
+  .field-line {
+    position: absolute;
+    bottom: 14px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--line);
+    transition: background 0.3s ease;
+  }
+  .field.focused .field-line { background: var(--accent); }
+  .field.error .field-line { background: var(--err); }
+  .field-error {
+    display: none;
+    margin-top: 8px;
+    font: 400 12px/1 var(--sans);
+    color: var(--err);
+  }
+  .field.error .field-error { display: block; }
+
+  .submit {
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    background: var(--accent);
+    color: white;
+    padding: 17px 24px;
+    font: 500 14px/1 var(--sans);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 18px;
+    box-shadow: 0 0 24px rgba(184,153,104,0.35);
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  }
+  .submit:hover {
+    background: var(--accent-deep);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 28px rgba(184,153,104,0.5);
+  }
+  .submit:disabled { opacity: 0.7; cursor: wait; }
+  .submit-arrow { font-size: 16px; }
+
+  .disclaimer {
+    font: 400 10.5px/1.5 var(--sans);
+    color: var(--ink-muted);
+    opacity: 0.7;
+    text-align: center;
+    margin-top: 12px;
+  }
+  .form-error {
+    display: none;
+    margin-top: 12px;
+    text-align: center;
+    font: 400 13px/1.5 var(--sans);
+    color: var(--err);
+  }
+  .form-error.show { display: block; }
+
+  .success {
+    display: none;
+    padding: 8px 0;
+  }
+  .success.show { display: block; }
+  .form.hide { display: none; }
+  .success-mark {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    box-shadow: 0 0 24px rgba(184,153,104,0.5);
+  }
+  .success-mark svg { width: 22px; height: 22px; stroke: white; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .success-title {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .success-body {
+    color: var(--ink-soft);
+    font-size: 14.5px;
+    line-height: 1.55;
+  }
+  .success-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 22px;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 999px;
+    background: var(--accent);
+    color: white;
+    font: 500 14px/1 var(--sans);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    box-shadow: 0 0 24px rgba(184,153,104,0.35);
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  }
+  .success-cta:hover {
+    background: var(--accent-deep);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 28px rgba(184,153,104,0.5);
+  }
+  .success-cta svg { width: 17px; height: 17px; fill: currentColor; }
+
+  /* ============ LIZ ============ */
+  .liz-head {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+  }
+  .liz-photo-wrap {
+    flex: 0 0 96px;
+    position: relative;
+  }
+  .liz-halo {
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    background: conic-gradient(from 45deg, var(--accent), var(--sage), #C7896E, var(--accent));
+    filter: blur(8px);
+    opacity: 0.45;
+  }
+  .liz-photo {
+    position: relative;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 40%, #F4E1B8, #D4A968);
+    border: 1px solid rgba(255,255,255,0.7);
+    box-shadow: 0 10px 40px rgba(184,153,104,0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(70,50,20,0.55);
+    font: 500 9px/1 var(--sans);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-style: italic;
+    text-align: center;
+  }
+  .liz-title-block { padding-top: 4px; }
+  .liz-eyebrow {
+    font: 500 10.5px/1 var(--sans);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-deep);
+    margin-bottom: 8px;
+  }
+  .liz-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.15;
+  }
+  .liz-bio {
+    font: 400 15px/1.6 var(--sans);
+    color: var(--ink-soft);
+    text-wrap: pretty;
+    margin-top: 24px;
+  }
+  .liz-bio .strong { color: var(--accent-deep); }
+
+  /* ============ CLOSING ============ */
+  .closing {
+    padding: 88px 22px 56px;
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .closing-mark {
+    font-size: 20px;
+    opacity: 0.5;
+    margin-bottom: 20px;
+    color: var(--accent);
+  }
+  .closing-line {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.35;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .closing-line .accent { color: var(--accent-deep); }
+
+  /* ============ FOOTER ============ */
+  footer {
+    padding: 32px 22px calc(40px + env(safe-area-inset-bottom, 0px));
+    text-align: center;
+    border-top: 1px solid var(--line);
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  footer p {
+    font: 400 11px/1.6 var(--sans);
+    color: var(--ink-muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 360px) {
+    .promise-ghost { font-size: 100px; }
+    .orb-stage { width: 220px; height: 220px; }
+    .orb-ring.r1 { width: 145px; height: 145px; margin: -72.5px 0 0 -72.5px; }
+    .orb-ring.r2 { width: 180px; height: 180px; margin: -90px 0 0 -90px; }
+    .orb-ring.r3 { width: 215px; height: 215px; margin: -107.5px 0 0 -107.5px; }
+    .orb { width: 115px; height: 115px; }
+    .polaroid.featured { width: 200px; }
+  }
+
+  /* ============ REVEAL ============ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <span class="monogram">liz · zuppa</span>
+    <span class="status-pill">
+      <span class="status-dot"></span>
+      Turma fundadora
+    </span>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-photo"></div>
+    <div class="dots" id="dots"></div>
+
+    <div class="orb-stage">
+      <div class="orb-ring r1"></div>
+      <div class="orb-ring r2"></div>
+      <div class="orb-ring r3"></div>
+      <div class="orb-wrap">
+        <div class="orb">
+          <span class="phase" id="phase">inspira</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="headline-block">
+      <h1 class="headline">
+        Você não precisa<br/>
+        esvaziar a mente.<br/>
+        <span class="accent">Só começar.</span>
+      </h1>
+      <p class="subhead">
+        Desafio de 7 Dias — simples, guiado, feito pra quem
+        nunca meditou. Uma sessão por dia, gravada na natureza.
+      </p>
+    </div>
+  </section>
+
+  <!-- FEATURED PHOTO — entre hero e promessas -->
+  <div class="feature-photo reveal">
+    <div class="polaroid featured">
+      <div class="polaroid-img scene-amanhecer">
+        <div class="polaroid-grain"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMO FUNCIONA -->
+  <section class="section">
+    <p class="eyebrow reveal">Como funciona</p>
+    <div class="promises-list">
+      <div class="promise reveal">
+        <span class="promise-ghost">i</span>
+        <span class="promise-num">i</span>
+        <p class="promise-text">Uma entrega por dia — um ensinamento pra entender, uma prática guiada pra sentir. Você escolhe seu ritmo.</p>
+      </div>
+      <div class="promise reveal">
+        <span class="promise-ghost">ii</span>
+        <span class="promise-num">ii</span>
+        <p class="promise-text">7 ensinamentos que mudam como você entende a meditação — cada um acompanhado de uma prática guiada imersiva, gravada na natureza.</p>
+      </div>
+      <div class="promise reveal">
+        <span class="promise-ghost">iii</span>
+        <span class="promise-num">iii</span>
+        <p class="promise-text">Tudo gravado, tudo seu — assista quando quiser, quantas vezes quiser. O desafio não expira.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- OS 7 DIAS -->
+  <section class="section">
+    <p class="eyebrow reveal">A jornada</p>
+    <h2 class="section-title reveal">7 temas.<br/>Uma revelação por dia.</h2>
+    <div class="temas-list">
+      <div class="tema reveal">
+        <div class="tema-node"></div>
+        <span class="tema-num">Dia 1</span>
+        <p class="tema-title">Olhar de Iniciante</p>
+        <p class="tema-sub">Desmistificando a meditação de vez — o que a ciência diz sobre o que acontece no seu cérebro</p>
+      </div>
+      <div class="tema reveal">
+        <div class="tema-node"></div>
+        <span class="tema-num">Dia 2</span>
+        <p class="tema-title">Ativando a Energia Vital</p>
+        <p class="tema-sub">Como o corpo armazena o estresse — e o que a respiração tem a ver com isso</p>
+      </div>
+      <div class="tema reveal">
+        <div class="tema-node"></div>
+        <span class="tema-num">Dia 3</span>
+        <p class="tema-title">Emoções e Libertação de Bloqueios</p>
+        <p class="tema-sub">O que fazer com o que você sente — medo, raiva, tristeza e como não ser arrastado por elas</p>
+      </div>
+      <div class="tema reveal">
+        <div class="tema-node"></div>
+        <span class="tema-num">Dia 4</span>
+        <p class="tema-title">Quem Sou Eu?</p>
+        <p class="tema-sub">Identidade além dos papéis e rótulos — as 4 zonas de evolução e onde você está agora</p>
+      </div>
+      <div class="tema reveal">
+        <div class="tema-node"></div>
+        <span class="tema-num">Dia 5</span>
+        <p class="tema-title">O Caos Mental</p>
+        <p class="tema-sub">Como aprender a observar os pensamentos sem ser arrastado por eles — a metáfora dos Dois Lobos</p>
+      </div>
+      <div class="tema reveal">
+        <div class="tema-node"></div>
+        <span class="tema-num">Dia 6</span>
+        <p class="tema-title">O Poder dos Sons</p>
+        <p class="tema-sub">Mantras como tecnologia para a mente — por que sons sagrados desaceleram as ondas cerebrais</p>
+      </div>
+      <div class="tema reveal">
+        <div class="tema-node"></div>
+        <span class="tema-num">Dia 7</span>
+        <p class="tema-title">Vivendo no Presente</p>
+        <p class="tema-sub">O grande fechamento — como levar a meditação para as 24 horas do seu dia</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BONUS -->
+  <section class="section">
+    <p class="eyebrow reveal">Também vem junto</p>
+    <div class="bonus-list reveal">
+      <div class="bonus-item">
+        <div class="bonus-grain"></div>
+        <p class="bonus-name">7 Práticas Aprofundadas</p>
+        <p class="bonus-desc">Uma meditação guiada mais longa e imersiva para cada tema do desafio — gravadas na natureza em Ubatuba.</p>
+        <span class="bonus-format">7 meditações · guiadas · vídeo</span>
+      </div>
+      <div class="bonus-item">
+        <div class="bonus-grain"></div>
+        <p class="bonus-name">Meditação para Dormir</p>
+        <p class="bonus-desc">Áudio guiado de 12 min especial pra noite — para quem deita e a cabeça não para.</p>
+        <span class="bonus-format">12 min · áudio guiado</span>
+      </div>
+      <div class="bonus-item">
+        <div class="bonus-grain"></div>
+        <p class="bonus-name">Rastreador dos 7 Dias</p>
+        <p class="bonus-desc">PDF imprimível para marcar cada dia e anotar uma palavra sobre a sua prática — a sua jornada no papel.</p>
+        <span class="bonus-format">PDF · imprimível</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILMSTRIP -->
+  <section class="filmstrip-section">
+    <div class="filmstrip-head reveal">
+      <p class="filmstrip-eyebrow">Onde a paz acontece</p>
+      <h2 class="filmstrip-title">Cenários reais.<br/>Vida real.</h2>
+    </div>
+
+    <div class="filmstrip-scroll reveal">
+      <div class="filmstrip">
+        <div class="polaroid">
+          <div class="polaroid-img scene-amanhecer">
+            <div class="polaroid-grain"></div>
+          </div>
+        </div>
+        <div class="polaroid">
+          <div class="polaroid-img scene-mata">
+            <div class="polaroid-grain"></div>
+          </div>
+        </div>
+        <div class="polaroid">
+          <div class="polaroid-img scene-mar">
+            <div class="polaroid-grain"></div>
+          </div>
+        </div>
+        <div class="polaroid">
+          <div class="polaroid-img scene-vela">
+            <div class="polaroid-grain"></div>
+          </div>
+        </div>
+        <div class="polaroid">
+          <div class="polaroid-img scene-maos">
+            <div class="polaroid-grain"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="filmstrip-hint">deslize</p>
+  </section>
+
+  <!-- FORM -->
+  <section class="section">
+    <div class="form-card reveal">
+      <h2 class="form-heading">Entre pra<br/>turma fundadora.</h2>
+
+      <p class="disclaimer" style="text-align:left;margin:-8px 0 20px;">As primeiras a entrar garantem a condição especial de fundadora — acesso completo com todos os bônus.</p>
+
+      <span class="social-proof" id="socialProof" data-count="0">
+        <span class="status-dot"></span>
+        <strong id="waitingCount">0</strong>&nbsp;mulheres na lista
+      </span>
+
+      <form class="form" id="leadForm" novalidate>
+
+        <div class="field" data-field="name">
+          <label>Nome</label>
+          <input type="text" name="nome" placeholder="Maria Silva" autocomplete="given-name" />
+          <div class="field-line"></div>
+          <span class="field-error">Conta pra gente seu nome</span>
+        </div>
+
+        <div class="field" data-field="email">
+          <label>E-mail</label>
+          <input type="email" name="email" placeholder="maria@email.com" autocomplete="email" />
+          <div class="field-line"></div>
+          <span class="field-error">E-mail parece inválido</span>
+        </div>
+
+        <div class="field" data-field="phone">
+          <label>WhatsApp</label>
+          <input type="tel" name="whatsapp" placeholder="(11) 90000-0000" autocomplete="tel" />
+          <div class="field-line"></div>
+          <span class="field-error">Número parece incompleto</span>
+        </div>
+
+        <button type="submit" class="submit" id="submitBtn">
+          <span>Quero meu lugar</span>
+          <span class="submit-arrow">→</span>
+        </button>
+
+        <p class="disclaimer">Ao entrar, você aceita receber contato por e-mail e WhatsApp sobre o desafio. Sem spam — a gente só avisa quando abrir, e você sai quando quiser.</p>
+        <p class="form-error" id="formError">Ops, algo deu errado. Tenta de novo em instantes?</p>
+      </form>
+
+      <div class="success" id="success">
+        <div class="success-mark">
+          <svg viewBox="0 0 22 22"><path d="M5 11.5L9.5 16L17 7"/></svg>
+        </div>
+        <h3 class="success-title">Você está dentro.</h3>
+        <p class="success-body">
+          Você já está na lista — acabei de te mandar um e-mail confirmando.
+          Aviso assim que a turma abrir. Enquanto isso, vem comigo:
+        </p>
+        <a class="success-cta" href="https://instagram.com/liz.zuppa" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.31-1.46.72-2.13 1.38A5.9 5.9 0 0 0 .63 4.14c-.3.76-.5 1.64-.56 2.91C.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.31.79.72 1.46 1.38 2.13.67.66 1.34 1.07 2.13 1.38.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.9 5.9 0 0 0 2.13-1.38 5.9 5.9 0 0 0 1.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.9 5.9 0 0 0-1.38-2.13A5.9 5.9 0 0 0 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0Zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84Zm0 10.16A4 4 0 1 1 16 12a4 4 0 0 1-4 4Zm6.41-10.4a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44Z"/></svg>
+          Seguir @liz.zuppa
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIZ -->
+  <section class="section">
+    <div class="reveal">
+      <div class="liz-head">
+        <div class="liz-photo-wrap">
+          <div class="liz-halo"></div>
+          <div class="liz-photo">foto<br/>Liz</div>
+        </div>
+        <div class="liz-title-block">
+          <p class="liz-eyebrow">Sobre a Liz</p>
+          <h3 class="liz-title">Mãe, terapeuta,<br/>eterna estudante.</h3>
+        </div>
+      </div>
+      <p class="liz-bio">
+        Liz Zuppa é terapeuta holística com mais de
+        <span class="strong">18 certificações</span>
+        e está em formação em nutrição. Mãe de cinco filhos, ela conhece
+        na pele o que é querer paz no meio do caos — e passou anos
+        aprendendo o caminho de volta pra si mesma. Seu trabalho não
+        começa ensinando a <span class="strong">"meditar do jeito certo"</span>.
+        Começa de onde você está: a mente agitada, a vida cheia, a
+        vontade de desacelerar sem culpa. O desafio é o caminho que ela
+        queria ter tido quando <span class="strong">começou</span>.
+      </p>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="closing reveal">
+    <p class="closing-mark">✦</p>
+    <p class="closing-line">
+      A primeira turma é fundadora —<br/>
+      e isso só acontece uma vez.<br/>
+      <span class="accent">Entre na lista e venha com a gente.</span>
+    </p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>@liz.zuppa</p>
+  </footer>
+
+<script>
+  /* ============ Parallax dots ============ */
+  const dotsContainer = document.getElementById('dots');
+  const dotEls = [];
+  for (let i = 0; i < 22; i++) {
+    const d = document.createElement('span');
+    d.className = 'dot';
+    const size = 1.5 + Math.random() * 2;
+    d.style.width = d.style.height = size + 'px';
+    d.style.left = (Math.random() * 100) + '%';
+    d.style.top = (Math.random() * 100) + '%';
+    d.style.animationDelay = (Math.random() * 4) + 's';
+    dotEls.push(d);
+    dotsContainer.appendChild(d);
+  }
+
+  /* ============ Breathing phase (sync with 8s keyframe) ============ */
+  const phaseEl = document.getElementById('phase');
+  let isInspira = true;
+  setInterval(() => {
+    isInspira = !isInspira;
+    phaseEl.classList.remove('fade');
+    void phaseEl.offsetWidth;
+    phaseEl.textContent = isInspira ? 'inspira' : 'expira';
+    phaseEl.classList.add('fade');
+  }, 4000);
+
+  /* ============ Reveal on scroll ============ */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      if (en.isIntersecting) {
+        en.target.classList.add('visible');
+        io.unobserve(en.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* ============ Field focus/blur ============ */
+  document.querySelectorAll('.field').forEach(field => {
+    const input = field.querySelector('input');
+    input.addEventListener('focus', () => field.classList.add('focused'));
+    input.addEventListener('blur', () => field.classList.remove('focused'));
+    input.addEventListener('input', () => {
+      if (field.classList.contains('error')) field.classList.remove('error');
+    });
+  });
+
+  /* ============ Phone mask ============ */
+  const phoneInput = document.querySelector('[data-field="phone"] input');
+  phoneInput.addEventListener('input', (e) => {
+    let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+    if (v.length <= 2) e.target.value = v;
+    else if (v.length <= 7) e.target.value = `(${v.slice(0,2)}) ${v.slice(2)}`;
+    else e.target.value = `(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`;
+  });
+
+  /* ============ Form submit ============ */
+  const form = document.getElementById('leadForm');
+  const success = document.getElementById('success');
+  const submitBtn = document.getElementById('submitBtn');
+  const formError = document.getElementById('formError');
+
+  function validate() {
+    let ok = true;
+    document.querySelectorAll('.field').forEach(f => f.classList.remove('error'));
+
+    const name = form.elements.nome.value.trim();
+    const email = form.elements.email.value.trim();
+    const phone = form.elements.whatsapp.value.replace(/\D/g, '');
+
+    if (!name) { document.querySelector('[data-field="name"]').classList.add('error'); ok = false; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { document.querySelector('[data-field="email"]').classList.add('error'); ok = false; }
+    if (phone.length < 10) { document.querySelector('[data-field="phone"]').classList.add('error'); ok = false; }
+
+    return ok;
+  }
+
+  /* ============ Captura — Brevo via /api/subscribe ============
+     A página manda o lead pra função serverless em /api/subscribe
+     (ver lar-interior-site/api/subscribe.js), que chama a API do Brevo com a
+     chave guardada nas env vars da Vercel — nada sensível fica no HTML.
+
+     Em file:// ou localhost a função não existe, então roda em modo de
+     teste: só mostra a tela de sucesso, sem enviar nada. */
+  const TEST_MODE =
+    location.protocol === 'file:' ||
+    location.hostname === 'localhost' ||
+    location.hostname === '127.0.0.1';
+
+  function showSuccess() {
+    form.classList.add('hide');
+    success.classList.add('show');
+  }
+
+  function showError() {
+    submitBtn.disabled = false;
+    submitBtn.querySelector('span').textContent = 'Quero meu lugar';
+    formError.classList.add('show');
+  }
+
+  /* ============ Captura de UTMs da URL ============ */
+  function getUtms() {
+    const p = new URLSearchParams(location.search);
+    return {
+      utm_source:   p.get('utm_source')   || null,
+      utm_medium:   p.get('utm_medium')   || null,
+      utm_campaign: p.get('utm_campaign') || null,
+      utm_content:  p.get('utm_content')  || null,
+    };
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    formError.classList.remove('show');
+    if (!validate()) return;
+
+    submitBtn.disabled = true;
+    submitBtn.querySelector('span').textContent = 'Salvando…';
+
+    const lead = {
+      nome:     form.elements.nome.value.trim(),
+      email:    form.elements.email.value.trim(),
+      whatsapp: form.elements.whatsapp.value.trim(),
+      ...getUtms(),
+    };
+
+    try {
+      if (TEST_MODE) {
+        await new Promise(r => setTimeout(r, 700));
+        showSuccess();
+        return;
+      }
+
+      const resp = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(lead),
+      });
+
+      if (resp.ok) showSuccess();
+      else throw new Error('subscribe falhou: ' + resp.status);
+    } catch (err) {
+      console.error('Erro ao enviar o lead:', err);
+      showError();
+    }
+  });
+
+</script>
+
+</body>
+</html>
