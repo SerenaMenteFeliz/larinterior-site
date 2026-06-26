@@ -42,7 +42,7 @@ export default async function handler(req, res) {
   };
 
   const event = {
-    source:       body.source       || 'lista-espera-desafio-7d',
+    source:       body.source       || 'lar-interior-lista-espera-desafio-7d',
     utm_source:   body.utm_source   || null,
     utm_medium:   body.utm_medium   || null,
     utm_campaign: body.utm_campaign || null,
