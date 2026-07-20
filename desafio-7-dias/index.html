@@ -1030,7 +1030,7 @@
 
         <div class="field" data-field="name">
           <label>Nome</label>
-          <input type="text" name="nome" placeholder="Maria Silva" autocomplete="given-name" />
+          <input type="text" name="name" placeholder="Maria Silva" autocomplete="given-name" />
           <div class="field-line"></div>
           <span class="field-error">Conta pra gente seu nome</span>
         </div>
@@ -1184,7 +1184,7 @@
     let ok = true;
     document.querySelectorAll('.field').forEach(f => f.classList.remove('error'));
 
-    const name = form.elements.nome.value.trim();
+    const name = form.elements.name.value.trim();
     const email = form.elements.email.value.trim();
     const phone = form.elements.whatsapp.value.replace(/\D/g, '');
 
@@ -1238,10 +1238,12 @@
     submitBtn.querySelector('span').textContent = 'Salvando…';
 
     const lead = {
-      nome:     form.elements.nome.value.trim(),
-      email:    form.elements.email.value.trim(),
-      whatsapp: form.elements.whatsapp.value.trim(),
-      source:   'lista-espera-desafio-7d-lar-interior',
+      name:       form.elements.name.value.trim(),
+      email:      form.elements.email.value.trim(),
+      whatsapp:   form.elements.whatsapp.value.trim(),
+      event_type: 'lista-espera',
+      offer:      'desafio-7d',
+      product:    'lar-interior',
       ...getUtms(),
     };
 

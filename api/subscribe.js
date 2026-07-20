@@ -27,7 +27,7 @@ export default async function handler(req, res) {
   }
 
   const body = req.body || {};
-  const { nome, email, whatsapp } = body;
+  const { name, email, whatsapp } = body;
 
   const emailOk =
     typeof email === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -37,12 +37,14 @@ export default async function handler(req, res) {
 
   const contact = {
     email:    email.trim().toLowerCase(),
-    nome:     (nome || '').trim() || null,
+    name:     (name || '').trim() || null,
     whatsapp: normalizePhone(whatsapp),
   };
 
   const event = {
-    source:       body.source       || 'lista-espera-desafio-7d-lar-interior',
+    event_type:   body.event_type   || 'lista-espera',
+    offer:        body.offer        || 'desafio-7d',
+    product:      body.product      || 'lar-interior',
     utm_source:   body.utm_source   || null,
     utm_medium:   body.utm_medium   || null,
     utm_campaign: body.utm_campaign || null,
@@ -81,7 +83,7 @@ async function saveToSupabase(contact, event) {
     'Content-Type': 'application/json',
   };
 
-  // 1a. Upsert contact — on conflict(email): atualiza nome/whatsapp e updated_at
+  // 1a. Upsert contact — on conflict(email): atualiza name/whatsapp e updated_at
   const upsertResp = await fetch(`${url}/rest/v1/contacts`, {
     method: 'POST',
     headers: {
@@ -137,7 +139,7 @@ async function addToBrevo(contact) {
     body: JSON.stringify({
       email: contact.email,
       attributes: {
-        FIRSTNAME: contact.nome,
+        FIRSTNAME: contact.name,
         WHATSAPP:  contact.whatsapp,
       },
       listIds: [listId],
