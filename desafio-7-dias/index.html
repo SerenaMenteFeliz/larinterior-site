@@ -821,6 +821,7 @@
     transform: translateY(0);
   }
 </style>
+<script src="assets/posthog-init.js"></script>
 </head>
 <body>
 
@@ -1156,9 +1157,13 @@
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
   /* ============ Field focus/blur ============ */
+  let formStarted = false;
   document.querySelectorAll('.field').forEach(field => {
     const input = field.querySelector('input');
-    input.addEventListener('focus', () => field.classList.add('focused'));
+    input.addEventListener('focus', () => {
+      field.classList.add('focused');
+      if (!formStarted) { formStarted = true; phTrack('form_started'); }
+    });
     input.addEventListener('blur', () => field.classList.remove('focused'));
     input.addEventListener('input', () => {
       if (field.classList.contains('error')) field.classList.remove('error');
@@ -1188,9 +1193,9 @@
     const email = form.elements.email.value.trim();
     const phone = form.elements.whatsapp.value.replace(/\D/g, '');
 
-    if (!name) { document.querySelector('[data-field="name"]').classList.add('error'); ok = false; }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { document.querySelector('[data-field="email"]').classList.add('error'); ok = false; }
-    if (phone.length < 10) { document.querySelector('[data-field="phone"]').classList.add('error'); ok = false; }
+    if (!name) { document.querySelector('[data-field="name"]').classList.add('error'); phTrack('form_field_error', { field: 'name' }); ok = false; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { document.querySelector('[data-field="email"]').classList.add('error'); phTrack('form_field_error', { field: 'email' }); ok = false; }
+    if (phone.length < 10) { document.querySelector('[data-field="phone"]').classList.add('error'); phTrack('form_field_error', { field: 'whatsapp' }); ok = false; }
 
     return ok;
   }
@@ -1260,7 +1265,16 @@
         body: JSON.stringify(lead),
       });
 
-      if (resp.ok) showSuccess();
+      if (resp.ok) {
+        // Identifica pelo contact_id (contacts.id do Supabase) — mesma
+        // convenção de identidade do resto do sistema (quiz do Método
+        // Cálice, serena-app), não e-mail, pra manter 1 perfil por pessoa.
+        const data = await resp.json().catch(() => null);
+        if (data && data.contact_id && window.posthog && typeof posthog.identify === 'function') {
+          posthog.identify(data.contact_id);
+        }
+        showSuccess();
+      }
       else throw new Error('subscribe falhou: ' + resp.status);
     } catch (err) {
       console.error('Erro ao enviar o lead:', err);

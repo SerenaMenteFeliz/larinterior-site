@@ -9,6 +9,9 @@
 //   SUPABASE_SERVICE_ROLE_KEY   — Supabase → Project Settings → API → service_role
 //   BREVO_API_KEY               — (opcional) Brevo → SMTP & API → API Keys (v3)
 //   BREVO_LIST_ID               — (opcional) Brevo → Contatos → Listas → id numérico
+//   POSTHOG_API_KEY             — (opcional) mesma chave do projeto PostHog usada em
+//                                  metodocalice-site/serena-app — sem ela, pula (best-effort)
+//   POSTHOG_HOST                — (opcional) default https://us.i.posthog.com
 
 // Normaliza para E.164. Se já vier com +DDI, respeita. Sem DDI, assume +55 (Brasil).
 function normalizePhone(raw) {
@@ -52,8 +55,9 @@ export default async function handler(req, res) {
   };
 
   // ---------- 1. SUPABASE (crítico) ----------
+  let contactId;
   try {
-    await saveToSupabase(contact, event);
+    contactId = await saveToSupabase(contact, event);
   } catch (err) {
     console.error('Falha ao gravar no Supabase:', err.message);
     return res.status(500).json({ error: 'Não conseguimos salvar agora. Tenta de novo?' });
@@ -68,7 +72,34 @@ export default async function handler(req, res) {
     brevo = 'failed';
   }
 
-  return res.status(200).json({ ok: true, brevo });
+  // ---------- 3. POSTHOG (best-effort, aguardado — ver metodocalice-site/api/subscribe.js
+  // pro racional completo) — distinct_id = contactId, mesma convenção usada no
+  // serena-app e no quiz do Método Cálice, pra manter 1 perfil por pessoa
+  // atravessando os 3 produtos/repos. ----------
+  try {
+    await capturePostHog('lead_submitted', contactId, event);
+  } catch (err) {
+    console.error('Falha no PostHog (lead já salvo):', err.message);
+  }
+
+  return res.status(200).json({ ok: true, brevo, contact_id: contactId });
+}
+
+async function capturePostHog(eventName, distinctId, properties) {
+  const apiKey = process.env.POSTHOG_API_KEY;
+  if (!apiKey) return;
+  const host = process.env.POSTHOG_HOST || 'https://us.i.posthog.com';
+  const resp = await fetch(`${host}/capture/`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      api_key: apiKey,
+      event: eventName,
+      distinct_id: distinctId,
+      properties,
+    }),
+  });
+  if (!resp.ok) throw new Error(`PostHog capture ${resp.status}`);
 }
 
 // --- Supabase: upsert contact + insert lead_event ---
@@ -118,6 +149,8 @@ async function saveToSupabase(contact, event) {
     const err = await eventResp.json().catch(() => ({}));
     throw new Error(`lead_events insert ${eventResp.status}: ${JSON.stringify(err)}`);
   }
+
+  return contactId;
 }
 
 // --- Brevo (best-effort) ---
